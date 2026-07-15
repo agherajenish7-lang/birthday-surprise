@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>A Special Birthday Surprise</title>
+    
+    <!-- Meta tags for premium SEO/feeling -->
+    <meta name="description" content="A cinematic, premium interactive birthday surprise experience.">
+    <meta name="theme-color" content="#0E0E0E">
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- External Animation/Confetti Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <!-- Ambient Background Particles -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Top Navigation Controls -->
+    <header class="top-nav">
+        <button id="music-toggle" class="nav-btn" aria-label="Toggle music" type="button">
+            <span class="music-icon-wrapper">
+                <!-- SVG Speaker / Sound Wave Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="music-icon-muted">
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                    <path d="M9 9v6a3 3 0 0 0 3 3h1.5a1.5 1.5 0 0 0 1.5-1.5v-3"></path>
+                    <path d="M12 3a9 9 0 0 0-9 9"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="music-icon-playing hidden">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+            </span>
+            <span class="music-label">Play Music</span>
+        </button>
+    </header>
+
+    <!-- Main Screen Container -->
+    <main id="app-container">
+        
+        <!-- SCREEN 1: Landing Screen -->
+        <section id="screen-landing" class="screen active">
+            <!-- Premium CSS-Animated Galaxy Background -->
+            <div class="galaxy-container">
+                <div class="galaxy-clouds">
+                    <div class="cloud cloud-1"></div>
+                    <div class="cloud cloud-2"></div>
+                    <div class="cloud cloud-3"></div>
+                </div>
+                <div class="stars-layer stars-layer-1"></div>
+                <div class="stars-layer stars-layer-2"></div>
+                <div class="stars-layer stars-layer-3"></div>
+                
+                <div class="galaxy-planets">
+                    <div class="galaxy-planet planet-1">
+                        <div class="planet-ring"></div>
+                    </div>
+                    <div class="galaxy-planet planet-2"></div>
+                    <div class="galaxy-planet planet-3"></div>
+                    <div class="galaxy-planet planet-4"></div>
+                </div>
+                
+                <div class="galaxy-hearts">
+                    <span class="galaxy-heart heart-1">❤</span>
+                    <span class="galaxy-heart heart-2">❤</span>
+                    <span class="galaxy-heart heart-3">❤</span>
+                    <span class="galaxy-heart heart-4">❤</span>
+                    <span class="galaxy-heart heart-5">❤</span>
+                    <span class="galaxy-heart heart-6">❤</span>
+                </div>
+                
+                <div class="shooting-star-container">
+                    <div class="css-shooting-star"></div>
+                </div>
+            </div>
+            <div class="content-wrapper text-center">
+                <h1 class="heading fade-in-up">Someone has a little surprise for you <span class="heart-pulse">❤️</span></h1>
+                <p class="description fade-in-up-delay">Take a deep breath and press the button whenever you're ready.</p>
+                <div class="btn-container fade-in-up-delay-2">
+                    <button id="btn-start" class="btn btn-primary" type="button">
+                        <span>Start the Surprise 🎁</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: Countdown Screen -->
+        <section id="screen-countdown" class="screen">
+            <div class="content-wrapper text-center flex-column">
+                <div class="countdown-ring-wrapper">
+                    <!-- Circular SVG Countdown Ring -->
+                    <svg class="countdown-svg" viewBox="0 0 200 200">
+                        <circle class="ring-bg" cx="100" cy="100" r="85"></circle>
+                        <circle id="ring-progress" class="ring-progress" cx="100" cy="100" r="85"></circle>
+                    </svg>
+                    <div id="countdown-number" class="countdown-text">10</div>
+                </div>
+                <p id="countdown-subtext" class="countdown-subtext">Calm your mind...</p>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: Celebration / Cake Screen -->
+        <section id="screen-celebration" class="screen">
+            <div class="content-wrapper text-center flex-column">
+                <h2 id="birthday-title" class="birthday-title heading hidden">Happy Birthday <span class="heart-pulse">❤️</span></h2>
+                
+                <!-- Cake Stage Container -->
+                <div class="cake-stage">
+                    <!-- SVG Interactive Knife -->
+                    <svg id="svg-knife" class="svg-knife hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+                        <!-- Knife Blade -->
+                        <path d="M10,40 L120,40 C140,40 160,45 170,50 L170,52 C160,57 140,62 120,62 L10,62 Z" fill="#E8DCC8" stroke="#D4AF37" stroke-width="1.5" />
+                        <!-- Knife Handle -->
+                        <rect x="-40" y="42" width="50" height="16" rx="4" fill="#5C4033" stroke="#D4AF37" stroke-width="1.5" />
+                        <!-- Knife Handle Rivets -->
+                        <circle cx="-30" cy="50" r="2" fill="#D4AF37" />
+                        <circle cx="-10" cy="50" r="2" fill="#D4AF37" />
+                    </svg>
+
+                    <!-- SVG 3-Layer Birthday Cake -->
+                    <svg id="svg-cake" class="svg-cake" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <!-- Gold Gradient -->
+                            <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#AA7C11" />
+                                <stop offset="50%" stop-color="#D4AF37" />
+                                <stop offset="100%" stop-color="#F3E5AB" />
+                            </linearGradient>
+                            <!-- Cream Gradient -->
+                            <linearGradient id="cream-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#FFFFFF" />
+                                <stop offset="100%" stop-color="#F4D6D6" />
+                            </linearGradient>
+                            <!-- Shadow Gradient -->
+                            <radialGradient id="shadow-grad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="rgba(0,0,0,0.6)" />
+                                <stop offset="100%" stop-color="rgba(0,0,0,0)" />
+                            </radialGradient>
+                            <!-- Flame Glow Radial Filter -->
+                            <filter id="flame-glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="5" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        
+                        <!-- Base Cake Shadow -->
+                        <ellipse cx="200" cy="310" rx="160" ry="25" fill="url(#shadow-grad)" />
+                        
+                        <!-- Cake Board / Stand -->
+                        <path d="M30,300 C30,300 30,312 200,312 C370,312 370,300 370,300 L350,290 C350,290 290,295 200,295 C110,295 50,290 50,290 Z" fill="url(#gold-grad)" stroke="#D4AF37" stroke-width="1.5" />
+                        <ellipse cx="200" cy="295" rx="150" ry="12" fill="#202020" stroke="#D4AF37" stroke-dasharray="4 2" />
+
+                        <!-- Group containing entire cake layers to split it in half during slicing -->
+                        <g id="cake-left-half" class="cake-half-group">
+                            <!-- Bottom Layer (Left Side) -->
+                            <path class="cake-layer bottom-layer" d="M60,285 L200,285 L200,215 L60,215 Z" fill="#1C1C1C" stroke="url(#gold-grad)" stroke-width="2" />
+                            <path class="drip" d="M60,215 C80,215 85,230 100,230 C115,230 120,215 135,215 C150,215 155,235 170,235 C185,235 190,215 200,215 L200,215" fill="none" stroke="url(#cream-grad)" stroke-width="6" stroke-linecap="round" />
+                            <!-- Bottom Layer Gold Ribbon decoration -->
+                            <line x1="60" y1="265" x2="200" y2="265" stroke="#D4AF37" stroke-width="3" />
+                            
+                            <!-- Middle Layer (Left Side) -->
+                            <path class="cake-layer middle-layer" d="M90,205 L200,205 L200,145 L90,145 Z" fill="#1C1C1C" stroke="url(#gold-grad)" stroke-width="2" />
+                            <path class="drip" d="M90,145 C110,145 115,160 130,160 C145,160 150,145 165,145 C180,145 185,160 200,160 L200,160" fill="none" stroke="url(#cream-grad)" stroke-width="6" stroke-linecap="round" />
+                            <!-- Middle Layer Roses (Soft pink decorations) -->
+                            <circle cx="110" cy="180" r="10" fill="#F4D6D6" stroke="#E8DCC8" stroke-width="1" />
+                            <path d="M106,178 C108,174 112,174 114,178" fill="none" stroke="#D4AF37" />
+                            <circle cx="160" cy="180" r="8" fill="#F4D6D6" stroke="#E8DCC8" stroke-width="1" />
+
+                            <!-- Top Layer (Left Side) -->
+                            <path class="cake-layer top-layer" d="M120,135 L200,135 L200,85 L120,85 Z" fill="#1C1C1C" stroke="url(#gold-grad)" stroke-width="2" />
+                            <path class="drip" d="M120,85 C140,85 145,100 160,100 C175,100 180,85 200,85 L200,85" fill="none" stroke="url(#cream-grad)" stroke-width="6" stroke-linecap="round" />
+                            <!-- Top Layer gold studs -->
+                            <circle cx="140" cy="115" r="3" fill="#D4AF37" />
+                            <circle cx="180" cy="115" r="3" fill="#D4AF37" />
+
+                            <!-- Candle 1 (Left Candle) -->
+                            <g class="candle" id="candle-1">
+                                <rect x="150" y="55" width="6" height="30" fill="url(#gold-grad)" rx="1" />
+                                <line x1="153" y1="55" x2="153" y2="48" stroke="#F8F8F8" stroke-width="1.5" />
+                                <!-- Candle Flame -->
+                                <path class="flame" d="M153,48 C149,42 149,36 153,30 C157,36 157,42 153,48 Z" fill="#FFA500" filter="url(#flame-glow)" />
+                                <path class="flame-inner" d="M153,46 C151,43 151,39 153,35 C155,39 155,43 153,46 Z" fill="#FFFFE0" />
+                            </g>
+                        </g>
+                        
+                        <g id="cake-right-half" class="cake-half-group">
+                            <!-- Bottom Layer (Right Side) -->
+                            <path class="cake-layer bottom-layer" d="M200,285 L340,285 L340,215 L200,215 Z" fill="#1C1C1C" stroke="url(#gold-grad)" stroke-width="2" />
+                            <path class="drip" d="M200,215 C210,215 215,235 230,235 C245,235 250,215 265,215 C280,215 285,230 300,230 C315,230 320,215 340,215" fill="none" stroke="url(#cream-grad)" stroke-width="6" stroke-linecap="round" />
+                            <!-- Bottom Layer Gold Ribbon decoration -->
+                            <line x1="200" y1="265" x2="340" y2="265" stroke="#D4AF37" stroke-width="3" />
+
+                            <!-- Middle Layer (Right Side) -->
+                            <path class="cake-layer middle-layer" d="M200,205 L310,205 L310,145 L200,145 Z" fill="#1C1C1C" stroke="url(#gold-grad)" stroke-width="2" />
+                            <path class="drip" d="M200,160 C215,160 220,145 235,145 C250,145 255,160 270,160 C285,160 290,145 310,145" fill="none" stroke="url(#cream-grad)" stroke-width="6" stroke-linecap="round" />
+                            <!-- Middle Layer Roses -->
+                            <circle cx="240" cy="180" r="8" fill="#F4D6D6" stroke="#E8DCC8" stroke-width="1" />
+                            <circle cx="290" cy="180" r="10" fill="#F4D6D6" stroke="#E8DCC8" stroke-width="1" />
+                            <path d="M286,178 C288,174 292,174 294,178" fill="none" stroke="#D4AF37" />
+
+                            <!-- Top Layer (Right Side) -->
+                            <path class="cake-layer top-layer" d="M200,135 L280,135 L280,85 L200,85 Z" fill="#1C1C1C" stroke="url(#gold-grad)" stroke-width="2" />
+                            <path class="drip" d="M200,85 C220,85 225,100 240,100 C255,100 260,85 280,85" fill="none" stroke="url(#cream-grad)" stroke-width="6" stroke-linecap="round" />
+                            <!-- Top Layer gold studs -->
+                            <circle cx="220" cy="115" r="3" fill="#D4AF37" />
+                            <circle cx="260" cy="115" r="3" fill="#D4AF37" />
+
+                            <!-- Candle 2 (Center Candle) -->
+                            <g class="candle" id="candle-2">
+                                <rect x="197" y="50" width="6" height="35" fill="url(#gold-grad)" rx="1" />
+                                <line x1="200" y1="50" x2="200" y2="43" stroke="#F8F8F8" stroke-width="1.5" />
+                                <!-- Candle Flame -->
+                                <path class="flame" d="M200,43 C196,37 196,31 200,25 C204,31 204,37 200,43 Z" fill="#FFA500" filter="url(#flame-glow)" />
+                                <path class="flame-inner" d="M200,41 C198,38 198,34 200,30 C202,34 202,38 200,41 Z" fill="#FFFFE0" />
+                            </g>
+
+                            <!-- Candle 3 (Right Candle) -->
+                            <g class="candle" id="candle-3">
+                                <rect x="244" y="55" width="6" height="30" fill="url(#gold-grad)" rx="1" />
+                                <line x1="247" y1="55" x2="247" y2="48" stroke="#F8F8F8" stroke-width="1.5" />
+                                <!-- Candle Flame -->
+                                <path class="flame" d="M247,48 C243,42 243,36 247,30 C251,36 251,42 247,48 Z" fill="#FFA500" filter="url(#flame-glow)" />
+                                <path class="flame-inner" d="M247,46 C245,43 245,39 247,35 C249,39 249,43 247,46 Z" fill="#FFFFE0" />
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Custom Text Countdown for Blowing candles -->
+                <div id="blow-countdown" class="blow-countdown-number hidden">3</div>
+
+                <!-- Interactive Action Buttons -->
+                <div class="action-btn-container">
+                    <button id="btn-blow" class="btn btn-secondary fade-in-up" type="button">
+                        <span>Blow the Candles 🕯️</span>
+                    </button>
+                    <button id="btn-cut" class="btn btn-secondary hidden" type="button">
+                        <span>Cut the Cake 🎂</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: Letter Screen -->
+        <section id="screen-letter" class="screen">
+            <div class="content-wrapper text-center flex-column">
+                
+                <!-- Envelope / Card Graphic -->
+                <div id="birthday-card" class="birthday-card">
+                    <div class="card-inner">
+                        
+                        <!-- Front of Card / Envelope -->
+                        <div class="card-front">
+                            <div class="envelope-seal">💌</div>
+                            <h3 class="card-front-title">A Letter For You</h3>
+                            <p class="card-front-sub">Click to open</p>
+                        </div>
+                        
+                        <!-- Back of Card / Open Paper Letter -->
+                        <div class="card-back">
+                            <div class="letter-paper">
+                                <div class="letter-scroll-content">
+                                    <h3 class="letter-heading">Dearest,</h3>
+                                    
+                                    <!-- Dynamic Typewritten Message -->
+                                    <div id="typewriter-text" class="letter-text"></div>
+                                    
+                                    <p class="letter-signature">With all my love,</p>
+                                    <p class="letter-signature-name">❤️</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="made-with-love" class="made-with-love hidden">
+                    <p>Made with ❤️ just for you.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Project Script -->
+    <script src="script.js"></script>
+</body>
+</html>

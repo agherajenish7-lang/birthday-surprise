@@ -1,0 +1,915 @@
+/* 
+    ========================================================================
+    Interactive Birthday Surprise - Premium Stylesheets
+    Theme: Luxurious Matte Black with Gold & Warm Beige Accents
+    Target: Mobile first (9:16 portrait) with adaptive desktop layout
+    ========================================================================
+*/
+
+/* Core Reset & Variables */
+:root {
+    --bg-color: #0E0E0E;
+    --gold: #D4AF37;
+    --gold-hover: #F3E5AB;
+    --gold-glow: rgba(212, 175, 55, 0.4);
+    --white: #F8F8F8;
+    --beige: #E8DCC8;
+    --beige-dark: #C5B59D;
+    --pink: #F4D6D6;
+    
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+    
+    --transition-smooth: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    --transition-snappy: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--white);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base App Layout */
+#app-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Ambient Canvas behind everything */
+#ambient-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Landing Screen specific background and CSS Galaxy */
+#screen-landing {
+    background-color: #090909; /* Matte black */
+}
+
+/* Galaxy Container styling */
+.galaxy-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    filter: blur(1.5px); /* Slight blur effect on the galaxy */
+}
+
+/* Galaxy Clouds - 5% opacity using gradients */
+.galaxy-clouds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.05; /* Soft clouds with 5% opacity */
+}
+
+.cloud {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    mix-blend-mode: screen;
+    animation: driftCloud 45s infinite alternate ease-in-out;
+}
+
+.cloud-1 {
+    width: 350px;
+    height: 350px;
+    top: 15%;
+    left: 10%;
+    background: radial-gradient(circle, #3A3247 0%, transparent 70%);
+}
+
+.cloud-2 {
+    width: 400px;
+    height: 400px;
+    bottom: 20%;
+    right: 10%;
+    background: radial-gradient(circle, #4D3F43 0%, transparent 70%);
+    animation-delay: -15s;
+}
+
+.cloud-3 {
+    width: 300px;
+    height: 300px;
+    top: 40%;
+    left: 45%;
+    background: radial-gradient(circle, #474238 0%, transparent 70%);
+    animation-delay: -30s;
+}
+
+@keyframes driftCloud {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    100% { transform: translate(40px, 30px) scale(1.15) rotate(15deg); }
+}
+
+/* Star field using CSS Box Shadows for thousands of tiny stars */
+.stars-layer {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    top: 0;
+    left: 0;
+}
+
+/* Generates dozens of tiny stars per layer at different positions */
+.stars-layer-1 {
+    box-shadow: 
+        12vw 15vh #F8F8F8, 25vw 35vh #D8D8D8, 48vw 18vh #FFF, 82vw 11vh #E8DCC8,
+        5vw 62vh #F8F8F8, 30vw 75vh #D8D8D8, 70vw 65vh #FFF, 91vw 42vh #E8DCC8,
+        15vw 88vh #FFF, 55vw 92vh #F8F8F8, 85vw 82vh #D8D8D8, 62vw 45vh #FFF,
+        38vw 5vh #F8F8F8, 92vw 22vh #E8DCC8, 68vw 28vh #FFF, 22vw 52vh #D8D8D8,
+        50vw 60vh #F8F8F8, 77vw 80vh #E8DCC8, 10vw 40vh #FFF, 42vw 82vh #D8D8D8,
+        60vw 10vh #F8F8F8, 8vw 28vh #E8DCC8, 88vw 58vh #FFF, 71vw 88vh #D8D8D8,
+        19vw 19vh #F8F8F8, 34vw 60vh #FFF, 79vw 49vh #E8DCC8, 96vw 72vh #FFF;
+    animation: driftStars1 90s linear infinite, twinkleLayer1 5s infinite alternate ease-in-out;
+}
+
+.stars-layer-2 {
+    width: 1.5px;
+    height: 1.5px;
+    box-shadow: 
+        3vw 48vh #FFF, 18vw 8vh #E8DCC8, 33vw 25vh #F8F8F8, 58vw 52vh #D8D8D8,
+        88vw 85vh #FFF, 62vw 88vh #E8DCC8, 75vw 30vh #F8F8F8, 92vw 50vh #D8D8D8,
+        12vw 78vh #FFF, 45vw 65vh #E8DCC8, 28vw 90vh #F8F8F8, 52vw 12vh #D8D8D8,
+        80vw 5vh #FFF, 95vw 90vh #E8DCC8, 67vw 55vh #F8F8F8, 40vw 38vh #D8D8D8,
+        22vw 30vh #FFF, 5vw 92vh #E8DCC8, 85vw 20vh #F8F8F8, 49vw 80vh #D8D8D8,
+        60vw 68vh #FFF, 14vw 22vh #E8DCC8, 72vw 78vh #F8F8F8, 31vw 48vh #D8D8D8,
+        96vw 12vh #FFF, 8vw 60vh #E8DCC8, 50vw 32vh #F8F8F8, 83vw 62vh #D8D8D8;
+    animation: driftStars2 120s linear infinite, twinkleLayer2 7s infinite alternate ease-in-out;
+}
+
+.stars-layer-3 {
+    box-shadow: 
+        8vw 5vh #D8D8D8, 20vw 55vh #FFF, 42vw 22vh #E8DCC8, 70vw 12vh #F8F8F8,
+        85vw 40vh #D8D8D8, 92vw 80vh #FFF, 64vw 48vh #E8DCC8, 78vw 92vh #F8F8F8,
+        15vw 32vh #D8D8D8, 28vw 72vh #FFF, 55vw 85vh #E8DCC8, 38vw 92vh #F8F8F8,
+        50vw 50vh #D8D8D8, 88vw 3vh #FFF, 96vw 60vh #E8DCC8, 6vw 82vh #F8F8F8,
+        25vw 12vh #D8D8D8, 35vw 80vh #FFF, 80vw 22vh #E8DCC8, 48vw 70vh #F8F8F8,
+        61vw 28vh #D8D8D8, 12vw 92vh #FFF, 69vw 60vh #E8DCC8, 83vw 80vh #F8F8F8,
+        90vw 32vh #D8D8D8, 2vw 20vh #FFF, 52vw 95vh #E8DCC8, 74vw 42vh #F8F8F8;
+    animation: driftStars3 150s linear infinite, twinkleLayer3 9s infinite alternate ease-in-out;
+}
+
+/* Very slow stars drift */
+@keyframes driftStars1 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(25px, 20px); }
+}
+@keyframes driftStars2 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-20px, 15px); }
+}
+@keyframes driftStars3 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(15px, -20px); }
+}
+
+/* Twinkle animations for layers */
+@keyframes twinkleLayer1 {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.85; }
+}
+@keyframes twinkleLayer2 {
+    0%, 100% { opacity: 0.75; }
+    50% { opacity: 0.25; }
+}
+@keyframes twinkleLayer3 {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+}
+
+/* Planets - Small, Low Opacity, Low Saturation */
+.galaxy-planets {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.galaxy-planet {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35; /* Muted low opacity */
+    animation: driftPlanet 50s infinite alternate ease-in-out;
+}
+
+/* Muted 3D Crescent shadow built in using box-shadow inset */
+.planet-1 {
+    width: 16px;
+    height: 16px;
+    top: 25%;
+    left: 20%;
+    background: #5A6B7C; /* Muted slate blue */
+    box-shadow: inset -4px -4px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Elliptical planet ring */
+.planet-ring {
+    position: absolute;
+    width: 32px;
+    height: 6px;
+    border: 1px solid rgba(232, 220, 200, 0.15);
+    border-radius: 50%;
+    top: 5px;
+    left: -8px;
+    transform: rotate(-15deg);
+}
+
+.planet-2 {
+    width: 12px;
+    height: 12px;
+    top: 15%;
+    right: 25%;
+    background: #9E8873; /* Muted terracotta */
+    box-shadow: inset -3px -3px 4px rgba(0, 0, 0, 0.6);
+    animation-delay: -10s;
+}
+
+.planet-3 {
+    width: 18px;
+    height: 18px;
+    bottom: 30%;
+    right: 20%;
+    background: #738E78; /* Muted sage green */
+    box-shadow: inset -5px -5px 7px rgba(0, 0, 0, 0.6);
+    animation-delay: -20s;
+}
+
+.planet-4 {
+    width: 10px;
+    height: 10px;
+    bottom: 25%;
+    left: 25%;
+    background: #7D7082; /* Muted lavender */
+    box-shadow: inset -2.5px -2.5px 3.5px rgba(0, 0, 0, 0.6);
+    animation-delay: -30s;
+}
+
+@keyframes driftPlanet {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(15px, 10px); }
+}
+
+/* Hearts - Tiny, Low Saturation, Low Opacity */
+.galaxy-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.galaxy-heart {
+    position: absolute;
+    font-size: 8px; /* Tiny hearts */
+    opacity: 0.2; /* Very faint */
+    user-select: none;
+    animation: floatHeartCSS 30s linear infinite;
+}
+
+.heart-1 { left: 15%; top: 70%; color: #C5B59D; animation-delay: 0s; }
+.heart-2 { left: 35%; top: 85%; color: #D4AF37; animation-delay: -5s; }
+.heart-3 { left: 75%; top: 40%; color: #D0D0D0; animation-delay: -10s; }
+.heart-4 { left: 85%; top: 65%; color: #E1BDBD; animation-delay: -15s; }
+.heart-5 { left: 45%; top: 20%; color: #C5B59D; animation-delay: -20s; }
+.heart-6 { left: 60%; top: 78%; color: #E1BDBD; animation-delay: -25s; }
+
+@keyframes floatHeartCSS {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.25; }
+    90% { opacity: 0.25; }
+    100% { transform: translateY(-100px) rotate(15deg); opacity: 0; }
+}
+
+/* CSS Shooting Star - Runs once every 25 seconds */
+.shooting-star-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.css-shooting-star {
+    position: absolute;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, #F8F8F8 0%, rgba(248, 248, 248, 0) 100%);
+    opacity: 0;
+    transform: translate(120vw, -20vh) rotate(-35deg);
+    animation: shootingStarLoop 25s infinite linear;
+}
+
+/* Moves for 1.2s, then remains hidden for 23.8s */
+@keyframes shootingStarLoop {
+    0% {
+        transform: translate(100vw, 5vh) rotate(-35deg);
+        opacity: 0;
+    }
+    1% {
+        opacity: 1;
+    }
+    5% {
+        transform: translate(30vw, 50vh) rotate(-35deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(30vw, 50vh) rotate(-35deg);
+        opacity: 0;
+    }
+}
+
+/* Screens Setup */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), 
+                visibility 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+/* Content Container Wrapper */
+.content-wrapper {
+    width: 90%;
+    max-width: 480px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 12;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Typography Classes */
+.heading {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+.description {
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--beige);
+    margin-bottom: 2.5rem;
+    max-width: 320px;
+    letter-spacing: 0.2px;
+}
+
+/* Top Navigation and Music Toggle */
+.top-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.nav-btn {
+    pointer-events: auto;
+    background: rgba(14, 14, 14, 0.65);
+    border: 1px solid rgba(214, 175, 55, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 0.6rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    color: var(--beige);
+    transition: var(--transition-snappy);
+    outline: none;
+}
+
+.nav-btn:hover, .nav-btn:focus-visible {
+    border-color: var(--gold);
+    color: var(--white);
+    box-shadow: 0 0 15px var(--gold-glow);
+    transform: translateY(-2px);
+}
+
+.music-icon-wrapper svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--gold);
+    transition: var(--transition-snappy);
+}
+
+.music-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Premium Buttons */
+.btn {
+    position: relative;
+    border-radius: 50px;
+    padding: 1.1rem 2.5rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: var(--transition-snappy);
+    overflow: hidden;
+    width: auto;
+    min-width: 220px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: var(--bg-color);
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 10px rgba(214, 175, 55, 0.05);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.6s ease-out;
+    pointer-events: none;
+}
+
+.btn-primary:hover, .btn-primary:focus-visible {
+    transform: scale(1.05);
+    color: var(--white);
+    border-color: var(--gold-hover);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9), 0 0 20px var(--gold-glow);
+}
+
+.btn-primary:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-secondary {
+    background: rgba(32, 32, 32, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: var(--beige);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin-top: 1.5rem;
+}
+
+.btn-secondary:hover, .btn-secondary:focus-visible {
+    color: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 6px 20px var(--gold-glow);
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+}
+
+/* Micro Heart Pulse Animation */
+.heart-pulse {
+    display: inline-block;
+    animation: heartBeat 2s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+/* GSAP Delay Fallbacks (Standard CSS classes if needed) */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* SCREEN 2: Countdown Styles */
+.countdown-ring-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdown-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: rgba(232, 220, 200, 0.05);
+    stroke-width: 4;
+}
+
+.ring-progress {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 4;
+    stroke-linecap: round;
+    /* Circumference = 2 * PI * r = 2 * 3.14159 * 85 = ~534 */
+    stroke-dasharray: 534;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.countdown-text {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 400;
+    color: var(--white);
+    text-shadow: 0 0 15px rgba(248, 248, 248, 0.1);
+    user-select: none;
+}
+
+.countdown-subtext {
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--beige-dark);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: pulseAlpha 2s infinite ease-in-out;
+}
+
+@keyframes pulseAlpha {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* SCREEN 3: Celebration & Cake Stage */
+.birthday-title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.cake-stage {
+    position: relative;
+    width: 320px;
+    height: 280px;
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.svg-cake {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Cake Split and Animation CSS */
+.cake-half-group {
+    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-origin: 200px 200px;
+}
+
+/* Flicker Animation for candle flames */
+.flame {
+    animation: flicker 1.5s infinite alternate ease-in-out;
+    transform-origin: center bottom;
+}
+
+.flame-inner {
+    animation: flickerInner 1.5s infinite alternate ease-in-out;
+    transform-origin: center bottom;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
+    50% { transform: scale(1.05) rotate(1.5deg); opacity: 1; }
+    100% { transform: scale(0.95) rotate(-2deg); opacity: 0.9; }
+}
+
+@keyframes flickerInner {
+    0% { transform: scale(1) rotate(1deg); }
+    100% { transform: scale(1.1) rotate(-1.5deg); }
+}
+
+/* Knife Asset styling */
+.svg-knife {
+    position: absolute;
+    width: 120px;
+    height: 60px;
+    z-index: 50;
+    transform-origin: 170px 50px;
+    pointer-events: none;
+}
+
+/* Blow Countdown overlay */
+.blow-countdown-number {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--gold);
+    margin-top: 1rem;
+    text-shadow: 0 0 10px var(--gold-glow);
+    animation: scaleHeart 1s infinite alternate;
+}
+
+@keyframes scaleHeart {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* SCREEN 4: Envelope & Letter */
+.birthday-card {
+    perspective: 1200px;
+    width: 320px;
+    height: 240px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    z-index: 10;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.birthday-card.open .card-inner {
+    transform: rotateY(-180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+}
+
+.card-front {
+    background: linear-gradient(135deg, #161616, #202020);
+    border: 1.5px solid var(--gold);
+    color: var(--white);
+    padding: 2rem;
+}
+
+.envelope-seal {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    animation: pulseSeal 2s infinite ease-in-out;
+}
+
+@keyframes pulseSeal {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+.card-front-title {
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.card-front-sub {
+    font-size: 0.8rem;
+    color: var(--beige-dark);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.card-back {
+    background: #E8DCC8;
+    color: #1F1F1F;
+    transform: rotateY(180deg);
+    padding: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--gold);
+}
+
+.letter-paper {
+    width: 100%;
+    height: 100%;
+    background: #FAF5EE;
+    border-radius: 4px;
+    border: 1px dashed rgba(212,175,55,0.4);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.letter-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+    /* Custom thin scrollbar */
+}
+
+.letter-scroll-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.letter-scroll-content::-webkit-scrollbar-thumb {
+    background-color: var(--gold);
+    border-radius: 4px;
+}
+
+.letter-heading {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: #5C4033;
+    margin-bottom: 0.8rem;
+    font-style: italic;
+}
+
+.letter-text {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #2F2F2F;
+    margin-bottom: 1.2rem;
+    min-height: 80px;
+    word-break: break-word;
+}
+
+.letter-signature {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: #5C4033;
+    text-align: right;
+    margin-top: auto;
+    font-style: italic;
+}
+
+.letter-signature-name {
+    text-align: right;
+    font-size: 1rem;
+}
+
+/* Made with love bottom tagline */
+.made-with-love {
+    font-size: 0.85rem;
+    color: var(--beige-dark);
+    letter-spacing: 0.5px;
+    animation: fadeIn 2s forwards ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Scaling for Desktop */
+@media (min-width: 768px) {
+    .content-wrapper {
+        max-width: 600px;
+        padding: 3rem;
+    }
+    
+    .heading {
+        font-size: 2.8rem;
+    }
+    
+    .description {
+        font-size: 1.1rem;
+        max-width: 400px;
+    }
+    
+    .birthday-title {
+        font-size: 3.5rem;
+    }
+
+    .cake-stage {
+        width: 360px;
+        height: 320px;
+    }
+    
+    .birthday-card {
+        width: 400px;
+        height: 280px;
+    }
+    
+    .letter-heading {
+        font-size: 1.4rem;
+    }
+
+    .letter-text {
+        font-size: 0.95rem;
+    }
+}
+
+/* Touch-friendly device adjustments */
+@media (max-width: 360px) {
+    .heading {
+        font-size: 1.8rem;
+    }
+    
+    .cake-stage {
+        width: 280px;
+        height: 240px;
+    }
+    
+    .birthday-card {
+        width: 280px;
+        height: 210px;
+    }
+}
