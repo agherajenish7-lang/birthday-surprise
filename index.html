@@ -49,8 +49,24 @@
     <!-- Main Screen Container -->
     <main id="app-container">
         
+        <!-- SCREEN 0: Password Screen -->
+        <section id="screen-password" class="screen active">
+            <div class="glass-card text-center">
+                <div class="card-badge">✨ A Little Surprise Awaits...</div>
+                <h2 class="card-heading">Enter the Secret Password</h2>
+                <div class="input-container">
+                    <input type="password" id="password-input" placeholder="Enter Password..." autocomplete="off">
+                    <div class="hint-text">Hint: It's the day ❤️</div>
+                </div>
+                <div id="password-message" class="password-message"></div>
+                <button id="btn-unlock" class="btn btn-unlock" type="button">
+                    <span>Unlock Surprise</span>
+                </button>
+            </div>
+        </section>
+
         <!-- SCREEN 1: Landing Screen -->
-        <section id="screen-landing" class="screen active">
+        <section id="screen-landing" class="screen">
             <!-- Premium CSS-Animated Galaxy Background -->
             <div class="galaxy-container">
                 <div class="galaxy-clouds">

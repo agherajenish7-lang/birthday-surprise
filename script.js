@@ -7,11 +7,31 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     // Screen Elements
+    const screenPassword = document.getElementById("screen-password");
     const screenLanding = document.getElementById("screen-landing");
     const screenCountdown = document.getElementById("screen-countdown");
     const screenCelebration = document.getElementById("screen-celebration");
     const screenLetter = document.getElementById("screen-letter");
     const appContainer = document.getElementById("app-container");
+
+    // Password Screen Elements
+    const passwordInput = document.getElementById("password-input");
+    const passwordMessage = document.getElementById("password-message");
+    const btnUnlock = document.getElementById("btn-unlock");
+    const glassCard = document.querySelector(".glass-card");
+
+    // Fade in password card on load
+    gsap.fromTo(glassCard, {
+        opacity: 0,
+        y: 30,
+        scale: 0.95
+    }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1.2,
+        ease: "power3.out"
+    });
 
     // Interactive Buttons
     const btnStart = document.getElementById("btn-start");
@@ -641,6 +661,93 @@ document.addEventListener("DOMContentLoaded", () => {
             musicIconPlaying.classList.remove("hidden");
             musicIconMuted.classList.add("hidden");
             musicLabel.textContent = "Music On";
+        }
+    });
+
+    // Password Verification Logic
+    function checkPassword() {
+        const value = passwordInput.value.trim();
+        if (value === "1707") {
+            // Correct password
+            btnUnlock.disabled = true;
+            passwordInput.disabled = true;
+            btnUnlock.innerHTML = "<span>Unlocking...</span>";
+            
+            // Play success sound
+            unlockAudio();
+            if (audioSynthesizer && isMusicPlaying) {
+                audioSynthesizer.playChimes();
+            }
+
+            // Card slowly fades out
+            gsap.to(glassCard, {
+                opacity: 0,
+                y: -30,
+                scale: 0.95,
+                duration: 1.0,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    screenPassword.classList.remove("active");
+                }
+            });
+
+            // Make landing screen active so galaxy renders, but keep content wrapper hidden
+            screenLanding.classList.add("active");
+            gsap.set(screenLanding.querySelector(".content-wrapper"), { opacity: 0 });
+
+            // Background slightly zooms
+            gsap.fromTo(".galaxy-container", {
+                opacity: 0,
+                scale: 1.15
+            }, {
+                opacity: 1,
+                scale: 1,
+                duration: 1.5,
+                ease: "power2.out",
+                onComplete: () => {
+                    // Smoothly fade in current landing screen text/elements
+                    gsap.fromTo(screenLanding.querySelector(".content-wrapper"), {
+                        opacity: 0,
+                        y: 30
+                    }, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        ease: "power2.out"
+                    });
+                }
+            });
+            
+        } else {
+            // Wrong password: shake card, turn border red, show message
+            glassCard.classList.add("shake");
+            passwordInput.classList.add("invalid");
+            passwordMessage.textContent = "Oops... Try remembering our special day ❤️";
+            passwordMessage.classList.add("active");
+            
+            // Clear wrong input text
+            passwordInput.value = "";
+            
+            // Clean up shake class after animation completes
+            setTimeout(() => {
+                glassCard.classList.remove("shake");
+            }, 400);
+
+            // Clear invalid red border & message after 2 seconds
+            setTimeout(() => {
+                passwordInput.classList.remove("invalid");
+                passwordMessage.classList.remove("active");
+            }, 2000);
+        }
+    }
+
+    // Unlock button listener
+    btnUnlock.addEventListener("click", checkPassword);
+
+    // Enter key listener on password input
+    passwordInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            checkPassword();
         }
     });
 
